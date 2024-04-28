@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/pharma.git/static/css/main.0c793c39.css",
+    "main.js": "/pharma.git/static/js/main.dbbc134d.js",
+    "static/media/introVideo.mp4": "/pharma.git/static/media/introVideo.ec5b34a44ebd1192d702.mp4",
+    "static/media/doctor.jpg": "/pharma.git/static/media/doctor.deb55bc01499496b849a.jpg",
+    "static/media/research2.jpg": "/pharma.git/static/media/research2.3433615958ab0d43ffa4.jpg",
+    "static/media/research.jpg": "/pharma.git/static/media/research.7ea5db6022d60f1ced11.jpg",
+    "static/media/pharmacist.jpg": "/pharma.git/static/media/pharmacist.1fee3f77f823a658f4c9.jpg",
+    "static/media/research1.jpg": "/pharma.git/static/media/research1.4b31a00bbbaae999e9d8.jpg",
+    "static/media/phuong.jpg": "/pharma.git/static/media/phuong.abf4ac4505ac0f4e056e.jpg",
+    "static/media/research3.jpg": "/pharma.git/static/media/research3.aa57eba2645c39cffa32.jpg",
+    "static/media/companyLogo.png": "/pharma.git/static/media/companyLogo.96b83df7ca8dbfa8d1b7.png",
+    "static/media/partner2.png": "/pharma.git/static/media/partner2.0d7a32470fca17cd5874.png",
+    "static/media/partner1.png": "/pharma.git/static/media/partner1.fd2a5ad60403880d384d.png",
+    "static/media/partner4.png": "/pharma.git/static/media/partner4.1aff6e0de7c6ada9acb4.png",
+    "static/media/partner3.png": "/pharma.git/static/media/partner3.ea09c0cf71651c93f8ef.png",
+    "index.html": "/pharma.git/index.html",
+    "main.0c793c39.css.map": "/pharma.git/static/css/main.0c793c39.css.map",
+    "main.dbbc134d.js.map": "/pharma.git/static/js/main.dbbc134d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0c793c39.css",
+    "static/js/main.dbbc134d.js"
+  ]
+}
