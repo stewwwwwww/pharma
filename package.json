@@ -3,6 +3,7 @@
   "name": "pharma",
   "version": "0.1.0",
   "homepage": "phuongminhpharma.netlify.app",
+  "private": true,
   "dependencies": {
     "-": "^0.0.1",
     "@react-google-maps/api": "^2.19.3",
