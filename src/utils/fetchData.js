@@ -75,34 +75,6 @@ export const fetchResearch = async ({ params }) => {
   }
 };
 
-// export const fetchHome = async () => {
-//   const fetchData = async (endpoint) => {
-//     try {
-//       const response = await axios.get(endpoint, {
-//         headers: {
-//           "Authorization": `Bearer ${process.env.REACT_APP_API_TOKEN}`,
-//         },
-//       });
-//       return response.data;
-//     } catch (error) {
-//       throw new Error(`Error fetching ${endpoint}: ${error.message}`);
-//     }
-//   };
-
-//   try {
-//     const [product, research, article] = await Promise.all([
-//       fetchData("/Products"),
-//       fetchData("/Researchs"),
-//       fetchData("/Articles"),
-//     ]);
-
-//     return { product, research, article };
-//   } catch (err) {
-//     console.error("Failed to fetch data", err);
-//     console.log(`Bearer ${process.env.REACT_APP_API_TOKEN}`);
-//     return null; // Return null or an appropriate value in case of an error
-//   }
-// };
 export const fetchHome = async () => {
   try {
     const productResponse = await fetch("/products", {
