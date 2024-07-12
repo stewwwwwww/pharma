@@ -2,7 +2,6 @@
   "proxy": "https://pharmabackend.onrender.com",
   "name": "pharma",
   "version": "0.1.0",
-  "homepage": "https://phuongminhpharma.netlify.app/",
   "private": true,
   "dependencies": {
     "-": "^0.0.1",

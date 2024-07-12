@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { createContext } from "react";
+import { useState } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -120,17 +122,33 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-const App = () => {
-  if (localStorage.getItem("quantity") === 0) {
-    localStorage.setItem("quantity", 0);
-  }
-  useEffect(() => {
-    console.log("test", localStorage.getItem("quantity"));
-    return () => {};
-  });
+export const CartContext = createContext();
 
+const App = () => {
+    if (localStorage.getItem("productCart") === null) {
+    localStorage.setItem(
+      "productCart",
+      JSON.stringify({
+        subtotal: 0,
+        total: 0,
+        quantity: 0,
+        cartList: [],
+      }),
+    );
+  }
+  const [cartContext, setCartContext] = useState(
+    JSON.parse(localStorage.getItem("productCart")),
+  );
+  const handleAddToCart = (updatedCart) => {
+    setCartContext(updatedCart);
+  };
+  const handleRemoveFromCart = (productId)=>{
+    const updatedCart = cartContext()
+  }
   return (
-    <RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
+    <CartContext.Provider value={{ cartContext, handleAddToCart }}>
+      <RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
+    </CartContext.Provider>
   );
 };
 

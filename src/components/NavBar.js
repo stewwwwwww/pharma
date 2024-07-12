@@ -10,10 +10,10 @@ import classNames from "classnames";
 import bagwhite from "../assets/bagwhite.png";
 import bagblack from "../assets/bagblack.png";
 import deleteIcon from "../assets/delete.svg";
-import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { useContext } from "react";
+import { CartContext } from "../App.js";
 const NavBar = () => {
-  const params = useParams();
   const [scrollY, setScrollY] = useState(0);
   const [dashboardVisibility, setDashboardVisibility] = useState(false);
   const [aboutUsVisibility, setAboutUsVisibility] = useState(false);
@@ -32,6 +32,7 @@ const NavBar = () => {
   const navProduct = useRef(null);
   const navInsight = useRef(null);
 
+  const { cartContext } = useContext(CartContext);
   useEffect(() => {
     const handleScrollY = () => {
       setScrollY(window.scrollY);
@@ -150,80 +151,43 @@ const NavBar = () => {
               onClick={handleCloseCart}
             />
           </div>
-          <div className="flex h-full flex-col gap-4 px-6 py-4 sm:h-96">
-            <div className="flex items-center justify-between">
-              <div className="">
-                <h5>Gamucid</h5>
-                <p>100.000VND x 10 = 1.000.000VND</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1 rounded-[0.625rem] border-[0.15rem] border-[#00378A] px-3 py-2">
-                  <h5>10</h5>
-                  <div className="ml-2 flex flex-col justify-center gap-[0.35rem]">
-                    <div
-                      class="h-0 w-0 border-b-[10.5px] border-l-[7px]
-                    border-r-[7px] border-black border-l-transparent border-r-transparent"
-                    ></div>
-                    <div
-                      class="h-0 w-0 border-l-[7px] border-r-[7px] 
-                  border-t-[10.5px] border-black border-l-transparent border-r-transparent"
-                    ></div>
+          <div className="flex h-full flex-col gap-4 px-6 py-4 sm:h-96 overflow-y-scroll overflow-x-hidden">
+            {cartContext.cartList.map((item) => {
+              return (
+                <div className="flex items-center justify-between">
+                  <div className="">
+                    <h5>{item.itemName}</h5>
+                    <p>
+                      {item.itemTotal} VND x {item.itemQuantity} ={" "}
+                      {item.itemTotal * item.itemQuantity} VND
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex w-[4.4rem] gap-1 rounded-[0.625rem] border-[0.15rem] border-[#00378A] px-3 py-2">
+                      <h5>{item.itemQuantity}</h5>
+                      <div className="ml-2 flex flex-col justify-center gap-[0.35rem]">
+                        <div
+                          class="h-0 w-0 border-b-[10.5px] border-l-[7px]
+                  border-r-[7px] border-black border-l-transparent border-r-transparent"
+                        ></div>
+                        <div
+                          class="h-0 w-0 border-l-[7px] border-r-[7px] 
+                border-t-[10.5px] border-black border-l-transparent border-r-transparent"
+                        ></div>
+                      </div>
+                    </div>
+                    <img src={deleteIcon} />
                   </div>
                 </div>
-                <img src={deleteIcon} />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="">
-                <h5>Gamucid</h5>
-                <p>100.000VND x 10 = 1.000.000VND</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1 rounded-[0.625rem] border-[0.15rem] border-[#00378A] px-3 py-2">
-                  <h5>10</h5>
-                  <div className="ml-2 flex flex-col justify-center gap-[0.35rem]">
-                    <div
-                      class="h-0 w-0 border-b-[10.5px] border-l-[7px]
-                    border-r-[7px] border-black border-l-transparent border-r-transparent"
-                    ></div>
-                    <div
-                      class="h-0 w-0 border-l-[7px] border-r-[7px] 
-                  border-t-[10.5px] border-black border-l-transparent border-r-transparent"
-                    ></div>
-                  </div>
-                </div>
-                <img src={deleteIcon} />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="">
-                <h5>Gamucid</h5>
-                <p>100.000VND x 10 = 1.000.000VND</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1 rounded-[0.625rem] border-[0.15rem] border-[#00378A] px-3 py-2">
-                  <h5>10</h5>
-                  <div className="ml-2 flex flex-col justify-center gap-[0.35rem]">
-                    <div
-                      class="h-0 w-0 border-b-[10.5px] border-l-[7px]
-                    border-r-[7px] border-black border-l-transparent border-r-transparent"
-                    ></div>
-                    <div
-                      class="h-0 w-0 border-l-[7px] border-r-[7px] 
-                  border-t-[10.5px] border-black border-l-transparent border-r-transparent"
-                    ></div>
-                  </div>
-                </div>
-                <img src={deleteIcon} />
-              </div>
-            </div>
+              );
+            })}
           </div>
           <div className="flex h-24 justify-between border-t-2 px-6 py-4">
             <div className="grid grid-cols-2 grid-rows-2 gap-x-3">
-              <h5>Taxes + Fee: </h5>
-              <h5>160.000VND</h5>
-              <h5>SubTotal: </h5>
-              <h5>3.160.000VND</h5>
+              <h5>Subtotal: </h5>
+              <h5>{cartContext.subtotal} VND</h5>
+              <h5>Total: </h5>
+              <h5>{cartContext.total} VND</h5>
             </div>
             <button
               className={
@@ -376,7 +340,10 @@ const NavBar = () => {
             }
           })}
         </div>
-        <div className="flex items-center gap-7 cursor-pointer" onClick={handleOpenCart}>
+        <div
+          className="flex cursor-pointer items-center gap-7"
+          onClick={handleOpenCart}
+        >
           <div className="relative">
             <img
               src={scrollY === 0 ? bagwhite : bagblack}
@@ -384,7 +351,7 @@ const NavBar = () => {
               className="h-9 w-9"
             ></img>
             <p className="absolute bottom-[1.125rem] left-[1.225rem] rounded-lg bg-[#00378A] px-[0.475rem] py-[0.2rem] text-center text-sm text-white">
-              22
+              {cartContext.quantity < 100 ? cartContext.quantity : "99+"}
             </p>
           </div>
 

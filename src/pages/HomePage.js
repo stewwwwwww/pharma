@@ -9,7 +9,6 @@ import Research from "../components/Research";
 import Contact from "../components/Contact";
 import Articles from "../components/Articles";
 import Footer from "../components/Footer";
-import Location from "../components/Location";
 import SimpleMap from "../components/SimpleMap";
 import ScrollToTop from "../utils/ScrollToTop";
 
@@ -29,7 +28,6 @@ const HomePage = () => {
       {data ? <Products data={data.product} /> : <></>}
       <Contact />
       {data ? <Articles data={data.article} /> : <></>}
-      <Location />
       <SimpleMap />
 
       <Footer />

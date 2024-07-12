@@ -1,10 +1,9 @@
-import axios from "axios";
+const api = "https://pharmabackend.onrender.com";
 export const fetchProducts = async () => {
   try {
-    const response = await fetch("/products", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const response = await fetch(`${api}/products`);
     if (!response.ok) throw new Error("Failed to fetch products");
+    
     return await response.json();
   } catch (err) {
     console.error("Failed to fetch products", err);
@@ -14,10 +13,7 @@ export const fetchProducts = async () => {
 export const fetchProduct = async ({ params }) => {
   try {
     const response = await fetch(
-      `/products/${params.CategoryId}/${params.ProductId}`,
-      {
-        headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-      },
+      `${api}/products/${params.CategoryId}/${params.ProductId}`,
     );
     if (!response.ok) throw new Error("Failed to fetch products");
     return await response.json();
@@ -28,9 +24,7 @@ export const fetchProduct = async ({ params }) => {
 };
 export const fetchArticles = async () => {
   try {
-    const response = await fetch("/articles", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const response = await fetch(`${api}/articles`);
     if (!response.ok) throw new Error("Failed to fetch products");
     return await response.json();
   } catch (err) {
@@ -40,9 +34,7 @@ export const fetchArticles = async () => {
 };
 export const fetchArticle = async ({ params }) => {
   try {
-    const response = await fetch(`/articles/${params.ArticleId}`, {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const response = await fetch(`${api}/articles/${params.ArticleId}`);
     if (!response.ok) throw new Error("Failed to fetch products");
     return await response.json();
   } catch (err) {
@@ -52,9 +44,7 @@ export const fetchArticle = async ({ params }) => {
 };
 export const fetchResearchs = async () => {
   try {
-    const response = await fetch("/researchs", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const response = await fetch(`${api}/researchs`);
     if (!response.ok) throw new Error("Failed to fetch products");
     return await response.json();
   } catch (err) {
@@ -64,9 +54,7 @@ export const fetchResearchs = async () => {
 };
 export const fetchResearch = async ({ params }) => {
   try {
-    const response = await fetch(`/researchs/${params.ResearchId}`, {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const response = await fetch(`${api}/researchs/${params.ResearchId}`);
     if (!response.ok) throw new Error("Failed to fetch products");
     return await response.json();
   } catch (err) {
@@ -77,27 +65,18 @@ export const fetchResearch = async ({ params }) => {
 
 export const fetchHome = async () => {
   try {
-    const productResponse = await fetch("/products", {
+    const productResponse = await fetch(`${api}/products`, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}`,
-      },
     });
     if (!productResponse.ok) throw new Error("Failed to fetch products");
 
-    const researchResponse = await fetch("/researchs", {
+    const researchResponse = await fetch(`${api}/researchs`, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}`,
-      },
     });
     if (!researchResponse.ok) throw new Error("Failed to fetch researchs");
 
-    const articleResponse = await fetch("/articles", {
+    const articleResponse = await fetch(`${api}/articles`, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}`,
-      },
     });
     if (!articleResponse.ok) throw new Error("Failed to fetch articles");
 
@@ -114,13 +93,9 @@ export const fetchHome = async () => {
 
 export const fetchAboutUs = async () => {
   try {
-    const productResponse = await fetch("/products", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const productResponse = await fetch(`${api}/products`);
     if (!productResponse.ok) throw new Error("Failed to fetch products");
-    const researchResponse = await fetch("/researchs", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const researchResponse = await fetch(`${api}/researchs`);
     if (!researchResponse.ok) throw new Error("Failed to fetch researchs");
 
     return {
@@ -134,13 +109,9 @@ export const fetchAboutUs = async () => {
 
 export const fetchOurTeam = async () => {
   try {
-    const memberResponse = await fetch("/members", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const memberResponse = await fetch(`${api}/members`);
     if (!memberResponse) throw new Error("Failed to fetch members");
-    const faqResponse = await fetch("/faqs", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const faqResponse = await fetch(`${api}/faqs`);
     if (!faqResponse) throw new Error("Failed to fetch faqs");
     return {
       member: await memberResponse.json(),
@@ -152,9 +123,7 @@ export const fetchOurTeam = async () => {
 };
 export const fetchFaq = async () => {
   try {
-    const response = await fetch("/faqs", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const response = await fetch(`${api}/faqs`);
     if (!response) throw new Error("Failed to fetch faqs");
     return await response.json();
   } catch (err) {
@@ -163,9 +132,7 @@ export const fetchFaq = async () => {
 };
 export const fetchJoinUs = async () => {
   try {
-    const response = await fetch("/joinUs", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const response = await fetch(`${api}/joinUs`);
     if (!response) throw new Error("Failed to fetch join us");
     return await response.json();
   } catch (err) {
@@ -174,13 +141,9 @@ export const fetchJoinUs = async () => {
 };
 export const fetchRetailers = async () => {
   try {
-    const retailerResponse = await fetch("/retailers", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const retailerResponse = await fetch(`${api}/retailers`);
     if (!retailerResponse) throw new Error("Failed to fetch retailers");
-    const faqResponse = await fetch("/faqs", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const faqResponse = await fetch(`${api}/faqs`);
     if (!faqResponse) throw new Error("Failed to fetch faqs");
     return {
       retailer: await retailerResponse.json(),
@@ -192,9 +155,7 @@ export const fetchRetailers = async () => {
 };
 export const fetchContactUs = async () => {
   try {
-    const faqResponse = await fetch("/faqs", {
-      headers: { Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}` },
-    });
+    const faqResponse = await fetch(`${api}/faqs`);
     if (!faqResponse) throw new Error("Failed to fetch faqs");
     return await faqResponse.json();
   } catch (err) {
