@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { createContext } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -125,7 +125,7 @@ const router = createBrowserRouter([
 export const CartContext = createContext();
 
 const App = () => {
-    if (localStorage.getItem("productCart") === null) {
+  if (localStorage.getItem("productCart") === null) {
     localStorage.setItem(
       "productCart",
       JSON.stringify({
@@ -139,14 +139,82 @@ const App = () => {
   const [cartContext, setCartContext] = useState(
     JSON.parse(localStorage.getItem("productCart")),
   );
+  useEffect(() => {
+    localStorage.setItem("productCart", JSON.stringify(cartContext));
+    console.log(
+      "localStorage: ",
+      localStorage.getItem("productCart"),
+      "context: ",
+      cartContext,
+    );
+    return () => {};
+  }, [cartContext]);
   const handleAddToCart = (updatedCart) => {
     setCartContext(updatedCart);
   };
-  const handleRemoveFromCart = (productId)=>{
-    const updatedCart = cartContext()
-  }
+  const handleRemoveFromCart = (
+    productId,
+    productQuantity,
+    productSubtotal,
+    productTotal,
+  ) => {
+    const updatedCart = { ...cartContext };
+    const updatedCartList = cartContext.cartList.filter((item) => {
+      return item.itemId !== productId;
+    });
+    updatedCart.cartList = updatedCartList;
+    updatedCart.quantity -= productQuantity;
+    updatedCart.subtotal -= productSubtotal * productQuantity;
+    updatedCart.total -= productTotal * productQuantity;
+    setCartContext(updatedCart);
+  };
+  const handleIncrementCartItem = (
+    productId,
+    productSubtotal,
+    productTotal,
+  ) => {
+    const updatedCart = { ...cartContext };
+    const updatedCartListIdx = updatedCart.cartList.findIndex(
+      (item) => item.itemId === productId,
+    );
+    updatedCart.cartList[updatedCartListIdx].itemQuantity += 1;
+    updatedCart.quantity += 1;
+    updatedCart.subtotal += Number(productSubtotal);
+    updatedCart.total += Number(productTotal);
+    setCartContext(updatedCart);
+  };
+  const handleDecrementCartItem = (
+    productId,
+    productSubtotal,
+    productTotal,
+  ) => {
+    const updatedCart = { ...cartContext };
+    const updatedCartListIdx = updatedCart.cartList.findIndex(
+      (item) => item.itemId === productId,
+    );
+    if (updatedCart.cartList[updatedCartListIdx].itemQuantity > 1) {
+      updatedCart.cartList[updatedCartListIdx].itemQuantity -= 1;
+    } else {
+      const updatedCartList = cartContext.cartList.filter((item) => {
+        return item.itemId !== productId;
+      });
+      updatedCart.cartList = updatedCartList;
+    }
+    updatedCart.quantity -= 1;
+    updatedCart.subtotal -= Number(productSubtotal);
+    updatedCart.total -= Number(productTotal);
+    setCartContext(updatedCart);
+  };
   return (
-    <CartContext.Provider value={{ cartContext, handleAddToCart }}>
+    <CartContext.Provider
+      value={{
+        cartContext,
+        handleAddToCart,
+        handleRemoveFromCart,
+        handleIncrementCartItem,
+        handleDecrementCartItem,
+      }}
+    >
       <RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
     </CartContext.Provider>
   );

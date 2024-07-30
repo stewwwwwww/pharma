@@ -29,7 +29,6 @@ const HomePage = () => {
       <Contact />
       {data ? <Articles data={data.article} /> : <></>}
       <SimpleMap />
-
       <Footer />
     </div>
   );

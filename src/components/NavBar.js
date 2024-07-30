@@ -3,6 +3,12 @@ import { Link } from "react-router-dom";
 import logo from "../assets/companyLogo.png";
 import dashboardwhite from "../assets/darhboardwhite.png";
 import dashboardblack from "../assets/darhboardblack.png";
+import tiktokWhite from "../assets/tiktokwhite.svg";
+import tiktokBlack from "../assets/tiktokblack.svg";
+import facebookWhite from "../assets/facebookwhite.svg";
+import facebookBlack from "../assets/facebookblack.svg";
+import zaloWhite from "../assets/zalowhite.svg";
+import zaloBlack from "../assets/zaloblack.svg";
 import closeWhite from "../assets/closeWhite.png";
 import close from "../assets/close.png";
 import chevronDown from "../assets/chevron-down.png";
@@ -32,7 +38,12 @@ const NavBar = () => {
   const navProduct = useRef(null);
   const navInsight = useRef(null);
 
-  const { cartContext } = useContext(CartContext);
+  const {
+    cartContext,
+    handleRemoveFromCart,
+    handleIncrementCartItem,
+    handleDecrementCartItem,
+  } = useContext(CartContext);
   useEffect(() => {
     const handleScrollY = () => {
       setScrollY(window.scrollY);
@@ -95,7 +106,6 @@ const NavBar = () => {
   const handleOpenCart = () => {
     setCartVisibility(true);
   };
-
   const handleToggleSection = (e) => {
     if (
       dashboardAboutUs.current.contains(e.target) &&
@@ -134,6 +144,15 @@ const NavBar = () => {
       setInsightVisibility(false);
     }
   };
+  const handleOpenFacebook = () => {
+    window.open("https://www.facebook.com/Phuongminhpharma123", "_blank");
+  };
+  const handleOpenTiktok = () => {
+    window.open("  https://www.tiktok.com/@gamucidntc.pharma", "_blank");
+  };
+  const handleOpenZalo = () => {
+    window.open("https://zalo.me/4122427993092412872", "_blank");
+  };
   return (
     <div>
       <div
@@ -151,7 +170,7 @@ const NavBar = () => {
               onClick={handleCloseCart}
             />
           </div>
-          <div className="flex h-full flex-col gap-4 px-6 py-4 sm:h-96 overflow-y-scroll overflow-x-hidden">
+          <div className="flex h-full flex-col gap-4 overflow-x-hidden overflow-y-scroll px-6 py-4 sm:h-96">
             {cartContext.cartList.map((item) => {
               return (
                 <div className="flex items-center justify-between">
@@ -163,20 +182,45 @@ const NavBar = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="flex w-[4.4rem] gap-1 rounded-[0.625rem] border-[0.15rem] border-[#00378A] px-3 py-2">
+                    <div className="flex min-w-[4.4rem] gap-1 rounded-[0.625rem] border-[0.15rem] border-[#00378A] px-3 py-2">
                       <h5>{item.itemQuantity}</h5>
                       <div className="ml-2 flex flex-col justify-center gap-[0.35rem]">
                         <div
-                          class="h-0 w-0 border-b-[10.5px] border-l-[7px]
+                          onClick={() => {
+                            handleIncrementCartItem(
+                              item.itemId,
+                              item.itemSubtotal,
+                              item.itemTotal,
+                            );
+                          }}
+                          class="h-0 w-0 cursor-pointer border-b-[10.5px] border-l-[7px]
                   border-r-[7px] border-black border-l-transparent border-r-transparent"
                         ></div>
                         <div
-                          class="h-0 w-0 border-l-[7px] border-r-[7px] 
+                          onClick={() => {
+                            handleDecrementCartItem(
+                              item.itemId,
+                              item.itemSubtotal,
+                              item.itemTotal,
+                            );
+                          }}
+                          class="h-0 w-0 cursor-pointer border-l-[7px] border-r-[7px]
                 border-t-[10.5px] border-black border-l-transparent border-r-transparent"
                         ></div>
                       </div>
                     </div>
-                    <img src={deleteIcon} />
+                    <img
+                      className="cursor-pointer"
+                      onClick={() => {
+                        handleRemoveFromCart(
+                          item.itemId,
+                          item.itemQuantity,
+                          item.itemSubtotal,
+                          item.itemTotal,
+                        );
+                      }}
+                      src={deleteIcon}
+                    />
                   </div>
                 </div>
               );
@@ -340,15 +384,13 @@ const NavBar = () => {
             }
           })}
         </div>
-        <div
-          className="flex cursor-pointer items-center gap-7"
-          onClick={handleOpenCart}
-        >
+        <div className="flex cursor-pointer items-center gap-12">
           <div className="relative">
             <img
               src={scrollY === 0 ? bagwhite : bagblack}
               alt="dashboard"
-              className="h-9 w-9"
+              className="h-10"
+              onClick={handleOpenCart}
             ></img>
             <p className="absolute bottom-[1.125rem] left-[1.225rem] rounded-lg bg-[#00378A] px-[0.475rem] py-[0.2rem] text-center text-sm text-white">
               {cartContext.quantity < 100 ? cartContext.quantity : "99+"}
@@ -358,20 +400,23 @@ const NavBar = () => {
           <img
             src={scrollY === 0 ? dashboardwhite : dashboardblack}
             alt="dashboard"
-            className="h-9 w-9 cursor-pointer lg:hidden"
+            className="h-9 w-9 cursor-pointer lg:hidden lg:h-0 lg:w-0"
             onClick={handleOpenNavBar}
           ></img>
-          <button
-            className={classNames(
-              "hidden h-16 w-[11rem] rounded-[2rem] border-[0.1rem] border-white text-white lg:block",
-              {
-                "bg-transparent": scrollY === 0,
-                "bg-[#00378A]": scrollY !== 0,
-              },
-            )}
-          >
-            <a href="http://localhost:3000/">Contact us</a>
-          </button>
+          <div className={"hidden  h-8 gap-6 lg:flex"}>
+            <img
+              src={scrollY === 0 ? facebookWhite : facebookBlack}
+              onClick={handleOpenFacebook}
+            ></img>
+            <img
+              src={scrollY === 0 ? tiktokWhite : tiktokBlack}
+              onClick={handleOpenTiktok}
+            ></img>
+            <img
+              src={scrollY === 0 ? zaloWhite : zaloBlack}
+              onClick={handleOpenZalo}
+            ></img>
+          </div>
         </div>
       </div>
     </div>
