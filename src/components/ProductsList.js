@@ -5,10 +5,44 @@ import pic from "../assets/research2.jpg";
 import classNames from "classnames";
 import { useContext } from "react";
 import { CartContext } from "../App.js";
-import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 const ProductsList = ({ data }) => {
-  const { cartContext, handleAddToCart } = useContext(CartContext);
+  const { CategoryId } = useParams();
+  const { handleAddToCart } = useContext(CartContext);
+  const categoryRefs = useRef({});
+
+  const [isReadyToScroll, setIsReadyToScroll] = useState(false);
+
+  // Assign refs to categories
+  useEffect(() => {
+    data.forEach((category) => {
+      const normalizedCategory = category.category.replaceAll(/\s/g, "-");
+      if (!categoryRefs.current[normalizedCategory]) {
+        categoryRefs.current[normalizedCategory] = React.createRef();
+      }
+    });
+
+    // Indicate that refs are set up
+    setIsReadyToScroll(true);
+  }, [data]);
+
+  // Scroll to the specific category after refs and data are ready
+  useEffect(() => {
+    if (isReadyToScroll && CategoryId) {
+      const targetRef = categoryRefs.current[CategoryId];
+      if (targetRef && targetRef.current) {
+        const elementPosition = targetRef.current.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - 120;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [CategoryId, isReadyToScroll]);
 
   const handleAddItem = (e) => {
     const currentProductCart = JSON.parse(localStorage.getItem("productCart"));
@@ -23,7 +57,7 @@ const ProductsList = ({ data }) => {
         itemName: e.target.getAttribute("data-productName"),
         itemSubtotal: e.target.getAttribute("data-productPrice"),
         itemTotal: e.target.getAttribute("data-productPromotionPrice"),
-        itemImg: e.target.getAttribute("data-productImg")
+        itemImg: e.target.getAttribute("data-productImg"),
       };
       currentProductCart.cartList.push(newItem);
     } else {
@@ -54,7 +88,11 @@ const ProductsList = ({ data }) => {
       <h6 className="text-[#00378A]">Products</h6>
       {data.sort().map((category) => {
         return (
-          <div className="mx-4 flex max-w-[75rem] flex-col gap-8 md:grid md:grid-cols-2 lg:grid-cols-3">
+          <div
+            key={category.category}
+            ref={categoryRefs.current[category.category.replaceAll(/\s/g, "-")]}
+            className="mx-4 flex max-w-[75rem] flex-col gap-8 md:grid md:grid-cols-2 lg:grid-cols-3"
+          >
             <div className="flex flex-col items-center justify-between md:col-span-2 md:col-start-1 lg:md:col-span-3 lg:flex-row">
               <h1>{category.category}</h1>
               <p className="text-[#838B93] md:w-[68%] lg:w-[33%] lg:self-end lg:text-end">

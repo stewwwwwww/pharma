@@ -28,12 +28,12 @@ const Articles = ({ data }) => {
             >
               <img
                 src={item.img}
-                className="h-[18rem] object-cover sm:h-[24rem] md:w-[40%]"
+                className="h-[23  rem] rounded-md object-cover md:w-[40%]"
               />
               <div className="flex flex-col gap-6 md:w-[54%]">
                 <h2 className="text-[#00378A]">{item.name}</h2>
                 <h5 className="text-[#838B93]">{item.description}</h5>
-                <a className="mt-8 text-[#00378A]">Learn More</a>
+                <a className="mt-16 text-[#00378A]">Learn More</a>
               </div>
             </div>
           );

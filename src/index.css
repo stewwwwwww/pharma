@@ -33,8 +33,9 @@ h5 {
   @apply font-[Inter,sans-serif] text-[1.25rem] lg:font-medium;
 }
 h6 {
-  @apply font-[Inter,sans-serif] text-[1.125rem] lg:text-[1.25rem] lg:font-medium;
+  @apply font-[Inter,sans-serif] text-[1.25rem] lg:text-[1.25rem] lg:font-medium;
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

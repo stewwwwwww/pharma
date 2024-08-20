@@ -97,10 +97,16 @@ export const fetchAboutUs = async () => {
     if (!productResponse.ok) throw new Error("Failed to fetch products");
     const researchResponse = await fetch(`${api}/researchs`);
     if (!researchResponse.ok) throw new Error("Failed to fetch researchs");
+    const memberResponse = await fetch(`${api}/members`);
+    if (!memberResponse.ok) throw new Error("Failed to fetch researchs");
+    const faqResponse = await fetch(`${api}/faqs`);
+    if (!faqResponse.ok) throw new Error("Failed to fetch researchs");
 
     return {
       product: await productResponse.json(),
       research: await researchResponse.json(),
+      member: await memberResponse.json(),
+      faq: await faqResponse.json(),
     };
   } catch (err) {
     console.error("Failed to fetch data", err);

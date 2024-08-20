@@ -55,19 +55,19 @@ const ReseachIntro = () => {
       >
         <img
           src={partner1}
-          className="h-[4rem] w-[4rem] sm:h-[6rem] sm:w-[6rem] lg:h-[7.5rem] lg:w-[7.5rem]"
+          className="w-[4rem] sm:w-[6rem]"
         />
         <img
           src={partner2}
-          className="h-[4rem] w-[4rem] sm:h-[6rem] sm:w-[6rem] lg:h-[7.5rem] lg:w-[7.5rem]"
+          className="w-[4rem] sm:w-[6rem]"
         />
         <img
           src={partner3}
-          className="h-[4rem] w-[4rem] sm:h-[6rem] sm:w-[6rem] lg:h-[7.5rem] lg:w-[7.5rem]"
+          className="w-[4rem] sm:w-[6rem]"
         />
         <img
           src={partner4}
-          className="h-[4rem] w-[4rem] sm:h-[6rem] sm:w-[6rem] lg:h-[7.5rem] lg:w-[7.5rem]"
+          className="w-[4rem] sm:w-[6rem]"
         />
       </div>
     </div>

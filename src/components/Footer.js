@@ -1,7 +1,18 @@
 import React from "react";
 import pic from "../assets/companyLogo.png";
-
+import tiktokBlack from "../assets/tiktokblack.svg";
+import facebookBlack from "../assets/facebookblack.svg";
+import zaloBlack from "../assets/zaloblack.svg";
 const Footer = () => {
+  const handleOpenFacebook = () => {
+    window.open("https://www.facebook.com/Phuongminhpharma123", "_blank");
+  };
+  const handleOpenTiktok = () => {
+    window.open("  https://www.tiktok.com/@gamucidntc.pharma", "_blank");
+  };
+  const handleOpenZalo = () => {
+    window.open("https://zalo.me/4122427993092412872", "_blank");
+  };
   return (
     <div className="flex flex-col items-center pt-16 md:pt-20 lg:pt-24 xl:pt-36">
       <div className="h-[0.0625rem] w-full max-w-[75rem] bg-[#eaeef3]"></div>
@@ -14,12 +25,20 @@ const Footer = () => {
             elementum nisi eu, porttitor quam. Nullam est felis, molestie sed
             dui ut, tincidunt iaculis enim. Donec tincidunt metus
           </p>
-          <button
-            className="mt-4 h-16 w-[11rem] rounded-[2rem] border-[0.1rem]
-         bg-[#00378A] text-white shadow-[0_0_16px_rgba(0,55,138,0.1)]"
-          >
-            <a>Contact Us</a>
-          </button>
+          <div className={"h-8 gap-6 flex"} >
+            <img className="w-8 h-8 cursor-pointer"
+              src={facebookBlack}
+              onClick={handleOpenFacebook}
+            ></img>
+            <img className="w-8 h-8 cursor-pointer"
+              src={tiktokBlack}
+              onClick={handleOpenTiktok}
+            ></img>
+            <img className="w-8 h-8 cursor-pointer"
+              src={zaloBlack}
+              onClick={handleOpenZalo}
+            ></img>
+          </div>
         </div>
         <div className="flex flex-col gap-7 sm:grid sm:grid-cols-2 sm:grid-rows-2 md:w-[75%] lg:w-full">
           <div className="flex flex-col gap-5">
@@ -47,8 +66,8 @@ const Footer = () => {
         </div>
       </div>
       <div className="h-[0.0625rem] w-full max-w-[75rem] bg-[#eaeef3]"></div>
-      <div className="flex flex-col items-center justify-between gap-5 py-6 lg:flex-row px-4 w-full max-w-[75rem]">
-        <div className="flex gap-10 flex-wrap justify-center">
+      <div className="flex w-full max-w-[75rem] flex-col items-center justify-between gap-5 px-4 py-6 lg:flex-row">
+        <div className="flex flex-wrap justify-center gap-10">
           <a className="text-[#838B93]">About</a>
           <a className="text-[#838B93]">Services</a>
           <a className="text-[#838B93]">Research</a>

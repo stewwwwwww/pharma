@@ -123,9 +123,31 @@ const router = createBrowserRouter([
   },
 ]);
 export const CartContext = createContext();
+export const LanguageContext = createContext();
 
 const App = () => {
-  if (localStorage.getItem("productCart") === null) {
+  if (!localStorage.getItem("language")) {
+    localStorage.setItem("language", JSON.stringify("english"));
+  }
+  const [languageContext, setLanguageContext] = useState(
+    JSON.parse(localStorage.getItem("language")),
+  );
+  useEffect(() => {
+    localStorage.setItem("language", JSON.stringify(languageContext));
+    console.log(
+      "localStorage: ",
+      localStorage.getItem("language"),
+      "context: ",
+      languageContext,
+    );
+  }, [languageContext]);
+  const handleToggleEnglish = () => {
+    setLanguageContext("english");
+  };
+  const handleToggleVietnamese = () => {
+    setLanguageContext("vietnamese");
+  };
+  if (!localStorage.getItem("productCart")) {
     localStorage.setItem(
       "productCart",
       JSON.stringify({
@@ -147,7 +169,6 @@ const App = () => {
       "context: ",
       cartContext,
     );
-    return () => {};
   }, [cartContext]);
   const handleAddToCart = (updatedCart) => {
     setCartContext(updatedCart);
@@ -205,18 +226,29 @@ const App = () => {
     updatedCart.total -= Number(productTotal);
     setCartContext(updatedCart);
   };
+  const handleResetCart = () => {
+    setCartContext({ subtotal: 0, total: 0, quantity: 0, cartList: [] });
+  };
   return (
-    <CartContext.Provider
-      value={{
-        cartContext,
-        handleAddToCart,
-        handleRemoveFromCart,
-        handleIncrementCartItem,
-        handleDecrementCartItem,
-      }}
+    <LanguageContext.Provider
+      value={{ languageContext, handleToggleEnglish, handleToggleVietnamese }}
     >
-      <RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
-    </CartContext.Provider>
+      <CartContext.Provider
+        value={{
+          cartContext,
+          handleAddToCart,
+          handleRemoveFromCart,
+          handleIncrementCartItem,
+          handleDecrementCartItem,
+          handleResetCart,
+        }}
+      >
+        <RouterProvider
+          router={router}
+          fallbackElement={<div>Loading...</div>}
+        />
+      </CartContext.Provider>
+    </LanguageContext.Provider>
   );
 };
 

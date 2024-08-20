@@ -3,17 +3,28 @@ import { Link } from "react-router-dom";
 import logo from "../assets/companyLogo.png";
 import dashboardwhite from "../assets/darhboardwhite.png";
 import dashboardblack from "../assets/darhboardblack.png";
+import tiktokWhite from "../assets/tiktokwhite.svg";
+import tiktokBlack from "../assets/tiktokblack.svg";
+import facebookWhite from "../assets/facebookwhite.svg";
+import facebookBlack from "../assets/facebookblack.svg";
+import zaloWhite from "../assets/zalowhite.svg";
+import zaloBlack from "../assets/zaloblack.svg";
 import close from "../assets/close.png";
 import chevronDown from "../assets/chevron-down.png";
 import classNames from "classnames";
-
+import bagwhite from "../assets/bagwhite.png";
+import bagblack from "../assets/bagblack.png";
+import deleteIcon from "../assets/delete.svg";
 import { useEffect, useRef, useState } from "react";
-const StaticNavBar = () => {
+import { useContext } from "react";
+import { CartContext } from "../App.js";
+const NavBar = () => {
   const [scrollY, setScrollY] = useState(0);
   const [dashboardVisibility, setDashboardVisibility] = useState(false);
   const [aboutUsVisibility, setAboutUsVisibility] = useState(false);
   const [productVisibility, setProductVisibility] = useState(false);
   const [insightVisibility, setInsightVisibility] = useState(false);
+  const [cartVisibility, setCartVisibility] = useState(false);
 
   const [expandedSection, setExpandedSection] = useState("");
 
@@ -26,6 +37,12 @@ const StaticNavBar = () => {
   const navProduct = useRef(null);
   const navInsight = useRef(null);
 
+  const {
+    cartContext,
+    handleRemoveFromCart,
+    handleIncrementCartItem,
+    handleDecrementCartItem,
+  } = useContext(CartContext);
   useEffect(() => {
     const handleScrollY = () => {
       setScrollY(window.scrollY);
@@ -61,6 +78,7 @@ const StaticNavBar = () => {
         { name: "Medicines", href: "/Products/Medicines" },
         { name: "Supplements", href: "/Products/Supplements" },
         { name: "Cosmetics", href: "/Products/Cosmetics" },
+        { name: "Medical Equipments", href: "/Products/Medical-Equipments" },
       ],
     },
     {
@@ -82,7 +100,12 @@ const StaticNavBar = () => {
   const handleOpenNavBar = () => {
     setDashboardVisibility(true);
   };
-
+  const handleCloseCart = () => {
+    setCartVisibility(false);
+  };
+  const handleOpenCart = () => {
+    setCartVisibility(true);
+  };
   const handleToggleSection = (e) => {
     if (
       dashboardAboutUs.current.contains(e.target) &&
@@ -120,10 +143,138 @@ const StaticNavBar = () => {
     } else if (navInsight.current && navInsight.current.contains(e.target)) {
       setInsightVisibility(false);
     }
-    console.log(e.target);
+  };
+  const handleOpenFacebook = () => {
+    window.open("https://www.facebook.com/Phuongminhpharma123", "_blank");
+  };
+  const handleOpenTiktok = () => {
+    window.open("  https://www.tiktok.com/@gamucidntc.pharma", "_blank");
+  };
+  const handleOpenZalo = () => {
+    window.open("https://zalo.me/4122427993092412872", "_blank");
   };
   return (
     <div>
+      <div
+        className={classNames(
+          "fixed z-[100] flex h-full w-full items-center justify-center bg-gray-600 bg-opacity-35",
+          { block: cartVisibility, hidden: !cartVisibility },
+        )}
+      >
+        <div className="z-[101] m-auto flex h-full w-full flex-col justify-between bg-white sm:h-auto sm:w-[35rem] sm:overflow-hidden sm:rounded-md">
+          <div className="flex justify-between border-b-2 px-6 py-4">
+            <h4 className="">Your Shopping Cart</h4>
+            <img
+              src={close}
+              className="h-10 w-10 cursor-pointer p-2"
+              onClick={handleCloseCart}
+            />
+          </div>
+          <div className="flex h-full flex-col gap-4 overflow-x-hidden overflow-y-scroll px-6 py-4 sm:h-96">
+            {cartContext.cartList.length === 0 ? (
+              <h5 className="m-auto text-[#838B93]">No Item has been added</h5>
+            ) : (
+              cartContext.cartList.map((item) => {
+                return (
+                  <div className="flex items-center justify-between">
+                    <div className="">
+                      <h5>{item.itemName}</h5>
+                      <p>
+                        {item.itemTotal.replace(
+                          /(\d)(?=(\d{3})+(?!\d))/g,
+                          "$1,",
+                        )}{" "}
+                        VND x {item.itemQuantity} ={" "}
+                        {String(item.itemTotal * item.itemQuantity).replace(
+                          /(\d)(?=(\d{3})+(?!\d))/g,
+                          "$1,",
+                        )}{" "}
+                        VND
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="flex min-w-[4.4rem] gap-1 rounded-[0.625rem] border-[0.15rem] border-[#00378A] px-3 py-2">
+                        <h5>{item.itemQuantity}</h5>
+                        <div className="ml-2 flex flex-col justify-center gap-[0.35rem]">
+                          <div
+                            onClick={() => {
+                              handleIncrementCartItem(
+                                item.itemId,
+                                item.itemSubtotal,
+                                item.itemTotal,
+                              );
+                            }}
+                            class="h-0 w-0 cursor-pointer border-b-[10.5px] border-l-[7px]
+                  border-r-[7px] border-black border-l-transparent border-r-transparent"
+                          ></div>
+                          <div
+                            onClick={() => {
+                              handleDecrementCartItem(
+                                item.itemId,
+                                item.itemSubtotal,
+                                item.itemTotal,
+                              );
+                            }}
+                            class="h-0 w-0 cursor-pointer border-l-[7px] border-r-[7px]
+                border-t-[10.5px] border-black border-l-transparent border-r-transparent"
+                          ></div>
+                        </div>
+                      </div>
+                      <img
+                        className="cursor-pointer"
+                        onClick={() => {
+                          handleRemoveFromCart(
+                            item.itemId,
+                            item.itemQuantity,
+                            item.itemSubtotal,
+                            item.itemTotal,
+                          );
+                        }}
+                        src={deleteIcon}
+                      />
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+          <div className="flex h-24 justify-between border-t-2 px-6 py-4">
+            <div className="grid grid-cols-2 grid-rows-2 gap-x-3">
+              <h5>Subtotal: </h5>
+              <h5>
+                {String(cartContext.subtotal).replace(
+                  /(\d)(?=(\d{3})+(?!\d))/g,
+                  "$1,",
+                )}{" "}
+                VND
+              </h5>
+              <h5>Total: </h5>
+              <h5>
+                {String(cartContext.total).replace(
+                  /(\d)(?=(\d{3})+(?!\d))/g,
+                  "$1,",
+                )}{" "}
+                VND
+              </h5>
+            </div>
+            {cartContext.cartList.length === 0 ? (
+              <h5
+                to={"/Order"}
+                className="hidden rounded-md bg-[#838B93]  px-12 py-4 text-white lg:block"
+              >
+                Order
+              </h5>
+            ) : (
+              <Link
+                to={"/Order"}
+                className="hidden rounded-md bg-[#00378A]  px-12 py-4 text-white lg:block"
+              >
+                Order
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
       <div
         className={classNames(
           "no-scrollbar scroll fixed z-40 h-screen w-[18rem] overflow-y-auto bg-white",
@@ -144,7 +295,7 @@ const StaticNavBar = () => {
         </div>
         <div
           className={classNames(
-            "flex  flex-col items-start overflow-hidden p-2 px-6",
+            "flex flex-col items-start gap-2 overflow-hidden p-2 px-6",
           )}
           ref={dashboardListRef}
         >
@@ -153,9 +304,9 @@ const StaticNavBar = () => {
               return <Link to={item.href}>{item.name}</Link>;
             } else {
               return (
-                <>
+                <div className="w-full">
                   <div
-                    className={classNames("dashboardDropdown w-full", {
+                    className={classNames("dashboardDropdown", {
                       "[&>*:nth-child(2)]:-rotate-180":
                         expandedSection === item.name,
                     })}
@@ -163,8 +314,7 @@ const StaticNavBar = () => {
                     ref={item.dashboardRef}
                   >
                     <h5 className="text-[#0183C]">{item.name}</h5>
-
-                    <img src={chevronDown} className="w-6" />
+                    <img className="w-6" src={chevronDown} />
                   </div>
                   <div
                     className={classNames(
@@ -177,13 +327,11 @@ const StaticNavBar = () => {
                   >
                     {item.dropdown.map((dropdownItem) => {
                       return (
-                        <Link to={dropdownItem.href} className="py-2">
-                          {dropdownItem.name}
-                        </Link>
+                        <Link to={dropdownItem.href}>{dropdownItem.name}</Link>
                       );
                     })}
                   </div>
-                </>
+                </div>
               );
             }
           })}
@@ -199,13 +347,18 @@ const StaticNavBar = () => {
         )}
       >
         <img src={logo} alt="logo" className="center h-12 w-12"></img>
-        <div className="hidden text-[#00183C] lg:flex">
+        <div
+          className={classNames("hidden justify-center text-center lg:flex", {
+            "text-white": scrollY === 0,
+            "text-[#00183C]": scrollY !== 0,
+          })}
+        >
           {navList.map((item) => {
             if (!("dropdown" in item)) {
               return (
                 <Link
                   to={item.href}
-                  className="navLinkEffects py-8 lg:px-6 xl:px-8 2xl:px-10"
+                  className="navLinkEffects py-8 lg:px-2 xl:px-8 2xl:px-10"
                 >
                   {item.name}
                 </Link>
@@ -261,20 +414,64 @@ const StaticNavBar = () => {
             }
           })}
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-12">
+          <div className="relative cursor-pointer" onClick={handleOpenCart}>
+            <img
+              src={scrollY === 0 ? bagwhite : bagblack}
+              alt="dashboard"
+              className="h-10"
+            ></img>
+            <p className="absolute bottom-[1.125rem] left-[1.225rem] rounded-lg bg-[#00378A] px-[0.475rem] py-[0.2rem] text-center text-sm text-white">
+              {cartContext.quantity < 100 ? cartContext.quantity : "99+"}
+            </p>
+          </div>
+
           <img
-            src={dashboardblack}
+            src={scrollY === 0 ? dashboardwhite : dashboardblack}
             alt="dashboard"
-            className="h-7 w-7 cursor-pointer lg:hidden"
+            className="h-9 w-9 cursor-pointer lg:hidden lg:h-0 lg:w-0"
             onClick={handleOpenNavBar}
           ></img>
-          <button className="hidden h-16 w-[11rem] rounded-[2rem] border-[0.1rem] border-white bg-[#00378A] text-white lg:block">
-            <a href="http://localhost:3000/">Contact us</a>
-          </button>
+          <div className="hidden h-8 gap-6 lg:flex ">
+            <img
+              className="h-8 w-8 cursor-pointer"
+              src={scrollY === 0 ? facebookWhite : facebookBlack}
+              onClick={handleOpenFacebook}
+            ></img>
+            <img
+              className="h-8 w-8 cursor-pointer"
+              src={scrollY === 0 ? tiktokWhite : tiktokBlack}
+              onClick={handleOpenTiktok}
+            ></img>
+            <img
+              className="h-8 w-8 cursor-pointer"
+              src={scrollY === 0 ? zaloWhite : zaloBlack}
+              onClick={handleOpenZalo}
+            ></img>
+          </div>
         </div>
+      </div>
+      <div className="fixed bottom-4 left-4 z-[9999] flex flex-col gap-6 lg:hidden">
+        <img
+          className="h-10 w-10 cursor-pointer"
+          src={
+            scrollY + window.innerHeight < 744 ? facebookWhite : facebookBlack
+          }
+          onClick={handleOpenFacebook}
+        ></img>
+        <img
+          className="h-10 w-10 cursor-pointer"
+          src={scrollY + window.innerHeight < 744 ? tiktokWhite : tiktokBlack}
+          onClick={handleOpenTiktok}
+        ></img>
+        <img
+          className="h-10 w-10 cursor-pointer"
+          src={scrollY + window.innerHeight < 744 ? zaloWhite : zaloBlack}
+          onClick={handleOpenZalo}
+        ></img>
       </div>
     </div>
   );
 };
 
-export default StaticNavBar;
+export default NavBar;

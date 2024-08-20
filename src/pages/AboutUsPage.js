@@ -24,11 +24,11 @@ const AboutUsPage = () => {
       <About />
       <Technology />
       <OurTeamFounder />
-      <OurTeamMembers />
+      {data ? <OurTeamMembers data={data.member} /> : <></>}
       <Contact />
       {data ? <Research data={data.research} /> : <></>}
       {data ? <Products data={data.product} /> : <></>}
-      <FAQ />
+      {data ? <FAQ data={data.faq} /> : <></>}
       <SimpleMap />
       <Footer />
 
