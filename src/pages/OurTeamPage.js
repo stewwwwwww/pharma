@@ -18,8 +18,8 @@ const OurTeamPage = () => {
           <ScrollToTop />
           <StaticNavBar />
           <OurTeamIntro />
-          <OurTeamMembers data={data.member} />
           <OurTeamFounder />
+          <OurTeamMembers data={data.member} />
           <Contact />
           <FAQ data={data.faq} />
           <SimpleMap />

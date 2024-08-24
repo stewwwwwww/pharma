@@ -1,7 +1,10 @@
 import React from "react";
 import video from "../assets/introVideo.mp4";
 import { useAnimateContainer } from "../hooks/useAnimateContainer";
+import { LanguageContext } from "../App.js";
+import { useContext } from "react";
 const Intro = () => {
+  const { languageContext } = useContext(LanguageContext);
   const animateRef = useAnimateContainer();
   return (
     <div className="relative mb-[3.75rem] flex items-center lg:justify-center">
@@ -21,17 +24,18 @@ const Intro = () => {
         lg:items-start lg:text-start"
         ref={animateRef}
       >
-        <h6 className="text-white">Lorem ipsum dolor sit</h6>
-        <h1 className="max-w-[48rem] text-white">Lorem ipsum dolor sit amet</h1>
+        <h6 className="text-white">{languageContext === "english" ? "Green Products for Viet Families" : "Dược Xanh Cho Sức Khỏe Mọi Nhà"}</h6>
+        <h1 className="max-w-[48rem] text-white">
+          {languageContext === "english"
+            ? "Phuong Minh Pharma"
+            : "Dược Phương Minh"}
+        </h1>
         <div className="h-[0.0625rem] w-[90%] bg-[#838b93] md:w-[630px]"></div>
         <p className="text-white lg:w-[24rem]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac
-          egestas nisi, vitae ultrices magna. Sed in ex et massa rhoncus
-          molestie.
+          {languageContext === "english"
+            ? "Import and distribute Medicines, Supplements, and Cosmetics from top manufacturers in Europe. All products have been researched and clinically proven about efficacy and efficiency"
+            : "Chuyên nhập khẩu, phân phối Thuốc, Thực Phẩm Chức Năng, Mỹ Phẩm của các hãng dược hàng đầu Châu Âu. Tất cả sản phẩm ddeuf được nghiên cứu lâm sàng về hiệu quả điều trị và tính an toàn."}
         </p>
-        <button className="h-16 w-[17rem] rounded-[2rem] border-[0.1rem] border-white text-white">
-          <a href="http://localhost:3000/">Make An Appointment</a>
-        </button>
       </div>
     </div>
   );

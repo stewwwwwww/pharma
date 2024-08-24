@@ -3,8 +3,7 @@ import pic from "../assets/chevron-down.png";
 import { useState } from "react";
 import classNames from "classnames";
 
-const JoinUsPositions = ({data}) => {
-  
+const JoinUsPositions = ({ data }) => {
   const [visible, setVisible] = useState(Array(data.length).fill(false));
   const handleExpandDropdown = (index) => {
     const newVisible = visible.map((item, i) => {
@@ -37,9 +36,7 @@ const JoinUsPositions = ({data}) => {
                   {item.location}
                 </h4>
               </div>
-              <p>
-                {item.description}
-              </p>
+              <p>{item.description}</p>
               <div
                 className="flex w-[9rem] cursor-pointer items-center"
                 onClick={() => handleExpandDropdown(i)}
@@ -48,7 +45,7 @@ const JoinUsPositions = ({data}) => {
                 <img
                   src={pic}
                   className={classNames(
-                    " transition-transform duration-500 w-[24px]",
+                    " w-[24px] transition-transform duration-500",
                     {
                       "-rotate-180 ": visible[i],
                     },
@@ -57,20 +54,12 @@ const JoinUsPositions = ({data}) => {
               </div>
               <div
                 className={classNames(
-                  "flex flex-col overflow-hidden transition-[max-height] duration-500 gap-6",
+                  "flex flex-col gap-6 overflow-hidden transition-[max-height] duration-500",
                   { "max-h-[20rem]": visible[i] },
                   { "max-h-0": !visible[i] },
                 )}
               >
-                <p className="text-[#838B93]">
-                  {item.insight}
-                </p>
-                <button
-                  className="bottom-12 h-16 w-[11rem] rounded-[2rem] border-[0.1rem]
-         bg-[#00378A] text-white shadow-[0_0_16px_rgba(0,55,138,0.1)]"
-                >
-                  <a>View more</a>
-                </button>
+                <p className="text-[#838B93]">{item.insight}</p>
               </div>
             </div>
           ))}

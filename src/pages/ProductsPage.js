@@ -10,8 +10,8 @@ const ProductsPage = () => {
 
   return data ? (
     <>
-      <ScrollToTop />
       <NavBar />
+      <ScrollToTop />
       <ProductsIntro />
       <ProductsList data={data} />
       <Footer />

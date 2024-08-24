@@ -66,70 +66,82 @@ const NavBar = () => {
       dropdownVisibility: aboutUsVisibility,
       dropdown: [
         {
-          name: languageContext === "english" ? "Our Team" : "Đội Ngũ",
+          name: languageContext === "english" ? <>Our Team</> : <>Đội Ngũ</>,
           href: "/AboutUs/OurTeam",
         },
         { name: "FAQ", href: "/AboutUs/FAQ" },
         {
           name:
-            languageContext === "english" ? "Join Us" : "Tham Gia Chúng Tôi",
+            languageContext === "english" ? (
+              <>Join Us</>
+            ) : (
+              <>Tham Gia Chúng Tôi</>
+            ),
           href: "/AboutUs/JoinUs",
         },
         {
-          name: languageContext === "english" ? "Contact Us" : "Liên Hệ",
+          name: languageContext === "english" ? <>Contact Us</> : <>Liên Hệ</>,
           href: "/AboutUs/ContactUs",
         },
       ],
     },
     {
-      name: languageContext === "english" ? "Products" : "Sản Phẩm",
+      name: languageContext === "english" ? <>Products</> : <>Sản Phẩm</>,
       href: "/Products",
       dashboardRef: dashboardProduct,
       navRef: navProduct,
       dropdownVisibility: productVisibility,
       dropdown: [
         {
-          name: languageContext === "english" ? "Medicines" : "Thuốc Y Tế",
+          name:
+            languageContext === "english" ? <>Medicines</> : <>Thuốc Y Tế</>,
           href: "/Products/Medicines",
         },
         {
           name:
-            languageContext === "english"
-              ? "Supplements"
-              : "Thực Phẩm Chức Năng",
+            languageContext === "english" ? (
+              <>Supplements</>
+            ) : (
+              <>Thực Phẩm Chức Năng</>
+            ),
           href: "/Products/Supplements",
         },
         {
-          name: languageContext === "english" ? "Cosmetics" : "Mỹ Phẩm",
+          name: languageContext === "english" ? <>Cosmetics</> : <>Mỹ Phẩm</>,
           href: "/Products/Cosmetics",
         },
         {
           name:
-            languageContext === "english"
-              ? "Medical Equipments"
-              : "Thiết Bị Y Tế",
+            languageContext === "english" ? (
+              <>Medical Equipments</>
+            ) : (
+              <>Thiết Bị Y Tế</>
+            ),
           href: "/Products/Medical-Equipments",
         },
       ],
     },
     {
-      name: languageContext === "english" ? "Insights" : "Tin Tức Sự Kiện",
+      name:
+        languageContext === "english" ? <>Insights</> : <>Tin Tức Sự Kiện</>,
       dashboardRef: dashboardInsight,
       navRef: navInsight,
       dropdownVisibility: insightVisibility,
       dropdown: [
         {
-          name: languageContext === "english" ? "Researchs" : "Nghiên Cứu",
+          name:
+            languageContext === "english" ? <>Researchs</> : <>Nghiên Cứu</>,
           href: "/Insights/Researchs",
         },
         {
-          name: languageContext === "english" ? "Articles" : "Tin Tức",
+          name: languageContext === "english" ? <>Articles</> : <>Tin Tức</>,
           href: "/Insights/Articles",
         },
       ],
     },
     {
-      name: languageContext === "english" ? "Retailers" : "Các Nhà Phân Phối",
+      name:
+        languageContext === "english" ? <>Retailers</> : <>Các Nhà Phân Phối</>,
       href: "/OurRetailers",
     },
   ];
@@ -204,9 +216,11 @@ const NavBar = () => {
         <div className="z-[101] m-auto flex h-full w-full flex-col justify-between bg-white sm:h-auto sm:w-[35rem] sm:overflow-hidden sm:rounded-md">
           <div className="flex justify-between border-b-2 px-6 py-4">
             <h4 className="">
-              {languageContext === "english"
-                ? "Your Shopping Cart"
-                : "Giỏ Hàng"}
+              {languageContext === "english" ? (
+                <>Your Shopping Cart</>
+              ) : (
+                <>Giỏ Hàng</>
+              )}
             </h4>
             <img
               src={close}
@@ -217,16 +231,18 @@ const NavBar = () => {
           <div className="flex h-full flex-col gap-4 overflow-x-hidden overflow-y-scroll px-6 py-4 sm:h-96">
             {cartContext.cartList.length === 0 ? (
               <h5 className="m-auto text-[#838B93]">
-                {languageContext === "english"
-                  ? "No item has been added"
-                  : "Chưa có sản phẩm nào được thêm vào giỏ"}
+                {languageContext === "english" ? (
+                  <>No item has been added</>
+                ) : (
+                  <>Chưa có sản phẩm nào được thêm vào giỏ</>
+                )}
               </h5>
             ) : (
               cartContext.cartList.map((item) => {
                 return (
                   <div className="flex items-center justify-between">
                     <div className="">
-                      <h5>{item.itemName}</h5>
+                      <h5>{languageContext === "english" ? item.itemNameEnglish : item.itemNameVietnamese}</h5>
                       <p>
                         {item.itemTotal.replace(
                           /(\d)(?=(\d{3})+(?!\d))/g,
@@ -288,7 +304,13 @@ const NavBar = () => {
           </div>
           <div className="flex h-24 justify-between border-t-2 px-6 py-4">
             <div className="grid grid-cols-2 grid-rows-2 gap-x-3">
-              <h5>Subtotal: </h5>
+              <h5>
+                {languageContext === "english" ? (
+                  <>Subtotal</>
+                ) : (
+                  <>Giá Trước Giảm</>
+                )}
+              </h5>
               <h5>
                 {String(cartContext.subtotal).replace(
                   /(\d)(?=(\d{3})+(?!\d))/g,
@@ -296,7 +318,9 @@ const NavBar = () => {
                 )}{" "}
                 VND
               </h5>
-              <h5>Total: </h5>
+              <h5>
+                {languageContext === "english" ? <>Total</> : <>Thành Tiền</>}
+              </h5>
               <h5>
                 {String(cartContext.total).replace(
                   /(\d)(?=(\d{3})+(?!\d))/g,
@@ -317,7 +341,7 @@ const NavBar = () => {
                 to={"/Order"}
                 className="hidden rounded-md bg-[#00378A]  px-12 py-4 text-white lg:block"
               >
-                Order
+                {languageContext === "english" ? <>Order</> : <>Đặt Hàng</>}
               </Link>
             )}
           </div>

@@ -2,8 +2,11 @@ import React from "react";
 import { isDesktop } from "react-device-detect";
 import classNames from "classnames";
 import { useAnimateContainer } from "../hooks/useAnimateContainer";
+import { useContext } from "react";
+import { LanguageContext } from "../App.js";
 
 const Research = ({ data }) => {
+  const { languageContext } = useContext(LanguageContext);
   const animationRef = useAnimateContainer();
   return (
     <div className="flex flex-col items-center pt-16 text-center md:pt-20 lg:pt-24 xl:pt-36">
@@ -11,9 +14,20 @@ const Research = ({ data }) => {
         className="flex flex-col items-center gap-5 pb-10 "
         ref={animationRef}
       >
-        <h6 className="text-[#00378A]">Research</h6>
+        <h6 className="text-[#00378A]">
+          {languageContext === "english" ? <>Researchs</> : <>Nghiên Cứu</>}
+        </h6>
         <h2 className="max-w-[50rem]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          {languageContext === "english" ? (
+            <>
+              Our latest and most trusted researchs to show effectiveness as
+              well as efficacy.
+            </>
+          ) : (
+            <>
+              Những nghiên cứu lâm sàng để chứng minh độ hiệu quả của sản phẩm.
+            </>
+          )}
         </h2>
       </div>
       <div
@@ -37,8 +51,16 @@ const Research = ({ data }) => {
                 src={item.img}
                 className=" h-[20rem] w-full rounded object-cover"
               />
-              <h4 className="text-[#00378A]">{item.name}</h4>
-              <p className="text-[#838B93]">{item.description}</p>
+              <h4 className="text-[#00378A]">
+                {languageContext === "english"
+                  ? item.name.english
+                  : item.name.vietnamese}
+              </h4>
+              <p className="text-[#838B93]">
+                {languageContext === "english"
+                  ? item.description.english
+                  : item.description.vietnamese}
+              </p>
               <a className="text-[#00378A]">Learn More</a>
             </div>
           );

@@ -2,8 +2,11 @@ import React from "react";
 import { useAnimateContainer } from "../hooks/useAnimateContainer";
 import classNames from "classnames";
 import { isDesktop } from "react-device-detect";
+import { useContext } from "react";
+import { LanguageContext } from "../App.js";
 
 const Articles = ({ data }) => {
+  const { languageContext } = useContext(LanguageContext);
   const animationRef1 = useAnimateContainer();
   const animationRef2 = useAnimateContainer();
   return (
@@ -12,9 +15,15 @@ const Articles = ({ data }) => {
         className="flex flex-col items-center gap-5 pb-10 text-center"
         ref={animationRef1}
       >
-        <h6 className="text-[#00378A]">Articles</h6>
+        <h6 className="text-[#00378A]">
+          {languageContext === "english" ? <>Articles</> : <> Tin Tức</>}
+        </h6>
         <h2 className="max-w-[50rem]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          {languageContext === "english" ? (
+            <> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</>
+          ) : (
+            <>Tin tức và sự kiện nổi bật của tập đoàn</>
+          )}
         </h2>
       </div>
       <div className="flex flex-col items-center gap-8" ref={animationRef2}>
@@ -31,9 +40,24 @@ const Articles = ({ data }) => {
                 className="h-[23  rem] rounded-md object-cover md:w-[40%]"
               />
               <div className="flex flex-col gap-6 md:w-[54%]">
-                <h2 className="text-[#00378A]">{item.name}</h2>
-                <h5 className="text-[#838B93]">{item.description}</h5>
-                <a className="mt-16 text-[#00378A]">Learn More</a>
+                <h2 className="text-[#00378A]">
+                  {languageContext === "english"
+                    ? item.name.english
+                    : item.name.vietnamese}
+                </h2>
+                <h5 className="text-[#838B93]">
+                  {" "}
+                  {languageContext === "english"
+                    ? item.description.english
+                    : item.description.vietnamese}
+                </h5>
+                <a className="mt-16 text-[#00378A]">
+                  {languageContext === "english" ? (
+                    <>Learn more</>
+                  ) : (
+                    <>Xem thêm</>
+                  )}
+                </a>
               </div>
             </div>
           );

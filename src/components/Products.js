@@ -2,24 +2,41 @@ import React from "react";
 import { useAnimateContainer } from "../hooks/useAnimateContainer.js";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useContext } from "react";
+import { LanguageContext } from "../App.js";
 
 const Products = ({ data }) => {
+  const { languageContext } = useContext(LanguageContext);
   const animationRef1 = useAnimateContainer();
   const animationRef2 = useAnimateContainer();
   const [productImg, setProductImg] = useState(data[0].productList[0].img);
-  const [productName, setProductName] = useState(data[0].productList[0].name);
+  const [productName, setProductName] = useState(
+    languageContext === "english"
+      ? data[0].productList[0].name.english
+      : data[0].productList[0].name.vietnamese,
+  );
   const [productDescription, setProductDescription] = useState(
-    data[0].productList[0].description,
+    languageContext === "english"
+      ? data[0].productList[0].description.english
+      : data[0].productList[0].description.vietnamese,
   );
   const handleToggleProdyct = (e) => {
     setProductImg(
       data[0].productList[e.target.getAttribute("data-productIdx")].img,
     );
     setProductName(
-      data[0].productList[e.target.getAttribute("data-productIdx")].name,
+      languageContext === "english"
+        ? data[0].productList[e.target.getAttribute("data-productIdx")].name
+            .english
+        : data[0].productList[e.target.getAttribute("data-productIdx")].name
+            .vietnamese,
     );
     setProductDescription(
-      data[0].productList[e.target.getAttribute("data-productIdx")].description,
+      languageContext === "english"
+        ? data[0].productList[e.target.getAttribute("data-productIdx")]
+            .description.english
+        : data[0].productList[e.target.getAttribute("data-productIdx")]
+            .description.vietnamese,
     );
   };
 
@@ -29,14 +46,22 @@ const Products = ({ data }) => {
         className="relative flex flex-col items-center gap-5 lg:w-[32%] lg:items-start lg:text-start"
         ref={animationRef1}
       >
-        <h6 className="text-[#00378A]">Products</h6>
-        <h2>Our Company's Popular Products</h2>
+        <h6 className="text-[#00378A]">
+          {languageContext === "english" ? <>Products</> : <>Sản Phẩm</>}
+        </h6>
+        <h2>
+          {languageContext === "english" ? (
+            <>Our Company's Popular Products</>
+          ) : (
+            <>Sản Phẩm Nổi Bật Của Dược Phương Minh</>
+          )}
+        </h2>
         <Link
           to="/AboutUs"
           className="shadowContainer p-auto mt-16 flex h-16 w-[11rem] items-center justify-center rounded-[2rem] border-[0.1rem] bg-[#00378A] text-white transition-colors duration-300
         ease-in-out hover:border-none hover:bg-white hover:text-[#00378A]"
         >
-          Learn more
+          {languageContext === "english" ? <>Discover</> : <>Tìm Thêm</>}
         </Link>
       </div>
       <div ref={animationRef2}>
@@ -49,7 +74,9 @@ const Products = ({ data }) => {
                   data-productIdx={idx}
                   onClick={handleToggleProdyct}
                 >
-                  {item.name}
+                  {languageContext === "english"
+                    ? item.name.english
+                    : item.name.vietnamese}
                 </h5>
               </div>
             );
@@ -64,10 +91,14 @@ const Products = ({ data }) => {
             <h4 className="text-[#00378A]">{productName}</h4>
             <p className="text-[#838B93]">{productDescription}</p>
             <Link
-              to={`/Products/${data[0].category.replaceAll(/\s/g, "-")}/${productName.replaceAll(/\s/g, "-")}`}
+              to={`/Products/${data[0].category.english.replaceAll(/\s/g, "-")}/${productName.replaceAll(/\s/g, "-")}`}
               className="mt-7 text-[#00378A]"
             >
-              Learn More
+              {languageContext === "english" ? (
+                <>Learn more</>
+              ) : (
+                <>Xem Thêm</>
+              )}
             </Link>
           </div>
         </div>

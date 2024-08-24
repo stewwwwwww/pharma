@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import classNames from "classnames";
 import { isDesktop } from "react-device-detect";
+import { useContext } from "react";
+import { LanguageContext } from "../App.js";
 
 const ArticlesList = ({ data }) => {
+  const { languageContext } = useContext(LanguageContext);
   const navRef = useRef(null);
   //Numbers of Navigation Bar pivot and Navigation Bar length and each page length
   // (length > pivot)
@@ -53,11 +56,27 @@ const ArticlesList = ({ data }) => {
   return (
     <div className="mx-4 flex max-w-[75rem] flex-col gap-10 pb-10 pt-16 md:pt-20 lg:pt-24 xl:mx-auto xl:pt-36">
       <div className="flex items-center justify-between">
-        <h1>Recent Articles</h1>
-        <p className="text-[#838B93] md:w-[68%] lg:w-[33%] lg:self-end lg:text-end">
-          Nam eget magna arcu. Morbi molestie, quam cursus eleifend interdum,
-          lorem ante tempor nibh, efficitur dictum metus arcu vel sapien.
-          Vivamus in ligula
+        <h1 className="leading-none self-start">
+          {languageContext === "english" ? (
+            <>Recent Articles</>
+          ) : (
+            <>Tin Tức Gần Đây</>
+          )}
+        </h1>
+        <p className="text-[#838B93] md:w-[68%] lg:w-[33%] lg:text-end">
+          {languageContext === "english" ? (
+            <>
+              Nam eget magna arcu. Morbi molestie, quam cursus eleifend
+              interdum, lorem ante tempor nibh, efficitur dictum metus arcu vel
+              sapien. Vivamus in ligula
+            </>
+          ) : (
+            <>
+              Các nhà máy đạt tiêu chuẩn GMP của Guna, 0.F.I… với diện tích lên
+              tới 6000m2. hệ thống Quản lý chất lượng tích hợp có cấu trúc đảm
+              bảo tiêu chuẩn ISO 9001:2015. 
+            </>
+          )}
         </p>
       </div>
       <div
@@ -78,17 +97,25 @@ const ArticlesList = ({ data }) => {
                   src={article.img}
                   className=" h-[20rem] w-full rounded object-cover"
                 />
-                <h4 className="text-[#00378A]">{article.name}</h4>
-                <p className="text-[#838B93]">{article.description}</p>
+                <h4 className="text-[#00378A]">
+                  {languageContext === "english"
+                    ? article.name.english
+                    : article.name.vietnamese}
+                </h4>
+                <p className="text-[#838B93]">
+                  {languageContext === "english"
+                    ? article.description.english
+                    : article.description.vietnamese}
+                </p>
                 <Link
-                  to={`/Insights/Articles/${article.name}`.replaceAll(
+                  to={`/Insights/Articles/${languageContext === "english" ? article.name.english : article.name.vietnamese}`.replaceAll(
                     /\s/g,
                     "-",
                   )}
                   className="text-[#00378A]"
                   state={article}
                 >
-                  Learn More
+                  {languageContext === "english" ? <>Learn More</>: <>Xem Thêm</>}
                 </Link>
               </div>
             );

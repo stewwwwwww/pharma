@@ -7,8 +7,10 @@ import { useContext } from "react";
 import { CartContext } from "../App.js";
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { LanguageContext } from "../App.js";
 
 const ProductsList = ({ data }) => {
+  const { languageContext } = useContext(LanguageContext);
   const { CategoryId } = useParams();
   const { handleAddToCart } = useContext(CartContext);
   const categoryRefs = useRef({});
@@ -18,7 +20,10 @@ const ProductsList = ({ data }) => {
   // Assign refs to categories
   useEffect(() => {
     data.forEach((category) => {
-      const normalizedCategory = category.category.replaceAll(/\s/g, "-");
+      const normalizedCategory = category.category.english.replaceAll(
+        /\s/g,
+        "-",
+      );
       if (!categoryRefs.current[normalizedCategory]) {
         categoryRefs.current[normalizedCategory] = React.createRef();
       }
@@ -54,7 +59,8 @@ const ProductsList = ({ data }) => {
       const newItem = {
         itemQuantity: 1,
         itemId: e.target.getAttribute("data-productId"),
-        itemName: e.target.getAttribute("data-productName"),
+        itemNameEnglish: e.target.getAttribute("data-productNameEnglish"),
+        itemNameVietnamese: e.target.getAttribute("data-productNameVietnamese"),
         itemSubtotal: e.target.getAttribute("data-productPrice"),
         itemTotal: e.target.getAttribute("data-productPromotionPrice"),
         itemImg: e.target.getAttribute("data-productImg"),
@@ -85,18 +91,30 @@ const ProductsList = ({ data }) => {
 
   return (
     <div className="flex flex-col items-center gap-20 py-16 md:py-20 lg:py-24 xl:py-36">
-      <h6 className="text-[#00378A]">Products</h6>
+      <h6 className="text-[#00378A]">
+        {languageContext === "english" ? <>Products</> : <>Sản Phẩm</>}
+      </h6>
       {data.sort().map((category) => {
         return (
           <div
-            key={category.category}
-            ref={categoryRefs.current[category.category.replaceAll(/\s/g, "-")]}
+            key={category.category.english}
+            ref={
+              categoryRefs.current[
+                category.category.english.replaceAll(/\s/g, "-")
+              ]
+            }
             className="mx-4 flex max-w-[75rem] flex-col gap-8 md:grid md:grid-cols-2 lg:grid-cols-3"
           >
             <div className="flex flex-col items-center justify-between md:col-span-2 md:col-start-1 lg:md:col-span-3 lg:flex-row">
-              <h1>{category.category}</h1>
-              <p className="text-[#838B93] md:w-[68%] lg:w-[33%] lg:self-end lg:text-end">
-                {category.categoryDescription}
+              <h1 className="self-start leading-none">
+                {languageContext === "english"
+                  ? category.category.english
+                  : category.category.vietnamese}
+              </h1>
+              <p className="text-[#838B93] md:w-[68%] lg:w-[33%] lg:text-end">
+                {languageContext === "english"
+                  ? category.categoryDescription.english
+                  : category.categoryDescription.vietnamese}
               </p>
             </div>
             {category.productList.map((product, j) => {
@@ -128,7 +146,9 @@ const ProductsList = ({ data }) => {
                           isDesktop,
                       })}
                     >
-                      {product.name}
+                      {languageContext === "english"
+                        ? product.name.english
+                        : product.name.vietnamese}
                     </h4>
                     <p
                       className={classNames(
@@ -139,32 +159,33 @@ const ProductsList = ({ data }) => {
                         },
                       )}
                     >
-                      {product.description}
+                      {languageContext === "english"
+                        ? product.description.english
+                        : product.description.vietnamese}
                     </p>
                     <Link
                       className={classNames("text-white", {
                         "forwards opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100":
                           isDesktop,
                       })}
-                      to={`/Products/${category.category.replaceAll(/\s/g, "-")}/${product.name.replaceAll(/\s/g, "-")}`}
+                      to={`/Products/${category.category.english.replaceAll(/\s/g, "-")}/${product.name.english.replaceAll(/\s/g, "-")}`}
                     >
-                      Read more
+                      {languageContext === "english" ? <>Read more</> : <>Tìm hiểu thêm</>}
                     </Link>
 
                     <div className="mt-14 flex justify-between gap-2">
-                      <button>
-                        <h5
-                          onClick={handleAddItem}
-                          data-productId={product._id}
-                          data-productName={product.name}
-                          data-productPrice={product.price}
-                          data-productPromotionPrice={product.promotionPrice}
-                          data-productImg={product.img}
-                          className="w- text-nowrap rounded-[0.625rem] border-[0.15rem] px-4 py-[0.375rem] text-white"
-                        >
-                          Add to Cart
-                        </h5>
-                      </button>
+                      <h5
+                        onClick={handleAddItem}
+                        data-productId={product._id}
+                        data-productNameEnglish={product.name.english}
+                        data-productNameVietnamese={product.name.vietnamese}
+                        data-productPrice={product.price}
+                        data-productPromotionPrice={product.promotionPrice}
+                        data-productImg={product.img}
+                        className="cursor-pointer text-nowrap rounded-[0.625rem] underline px-4 py-[0.375rem] text-white"
+                      >
+                        {languageContext === "english" ? <>Add To Cart</> : <>Thêm Vào Giỏ</>}
+                      </h5>
                     </div>
                   </div>
                 </div>

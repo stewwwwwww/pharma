@@ -1,10 +1,12 @@
 import React from "react";
-import Button from "./Button";
 import pic from "../assets/pharmacist.jpg";
 import { useAnimateContainer } from "../hooks/useAnimateContainer";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { LanguageContext } from "../App.js";
 
 const About = () => {
+  const { languageContext } = useContext(LanguageContext);
   const animationRef1 = useAnimateContainer();
   const animationRef2 = useAnimateContainer();
   return (
@@ -18,19 +20,41 @@ const About = () => {
       lg:text-start"
         ref={animationRef1}
       >
-        <h6 className="text-[#00378A]">About Us</h6>
-        <h2 className="font-medium">Over 20 Years of Experience</h2>
+        <h6 className="text-[#00378A]">
+          {languageContext === "english" ? "About Us" : "Giới Thiệu"}
+        </h6>
+        <h2 className="font-medium">
+          {languageContext === "english" ? (
+            <>Over 20 Years if Experience</>
+          ) : (
+            <>Hơn 20 Năm Kinh Nghiệm trong Ngành</>
+          )}
+        </h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-          pretium hendrerit nunc non viverra. Nulla ipsum felis, suscipit in
-          dolor sit amet, porttitor pulvinar lectus. Aliquam et sem eget.
+          {languageContext === "english" ? (
+            <>
+              Products related to humans must be “Perfect”. Therefore, we choose
+              companies that continuously invest in research to improve the
+              safety and effectiveness of each product before launching.
+              Therefore, all products we distribute to Vietnam have full
+              clinical research.
+            </>
+          ) : (
+            <>
+              Các sản phẩm liên quan đến con người phải “Hoàn hảo”. Vì vậy chúng
+              tôi lựa chọn các công ty đầu tư liên tục vào nghiên cứu nhằm cải
+              thiện tính an toàn, hiệu quả cho từng sản phẩm trước khi ra đời.
+              Do đó, tất cả các sản phẩm chúng tôi phân phối về Việt Nam đều có
+              đầy đủ nghiên cứu lâm sàng.
+            </>
+          )}
         </p>
         <Link
-          to ="/AboutUs"
-          className="shadowContainer p-auto mt-16 flex h-16 w-[11rem] items-center justify-center rounded-[2rem] border-[0.1rem] transition-colors duration-300
+          to="/AboutUs"
+          className="shadowContainer p-auto mt-16 flex h-16 items-center justify-center rounded-[2rem] border-[0.1rem] px-8 transition-colors duration-300
         ease-in-out hover:bg-[#00378A] hover:text-white"
         >
-          Learn more
+          {languageContext === "english" ? <>Learn More</> : <>Xem Thêm</>}
         </Link>
       </div>
       <div
@@ -43,13 +67,19 @@ const About = () => {
           ref={animationRef2}
         >
           <h2 className="font-semibold text-white">300+</h2>
-          <h6 className="text-white">certificactes</h6>
+          <h6 className="text-white">
+            {languageContext === "english" ? <>Certificates</> : <>Chứng Chỉ</>}
+          </h6>
           <h2 className="font-semibold text-white">300+</h2>
-          <h6 className="text-white">certificactes</h6>
+          <h6 className="text-white">
+            {languageContext === "english" ? <>Awards</> : <>Giải Thưởng</>}
+          </h6>
         </div>
         <div className="flex h-[25%] items-center pl-7 backdrop-blur-sm">
           <h6 className="text-white">
-            We care Too Much about Our Customers safsa
+            {languageContext === "english"
+              ? <>We always value our customers</>
+              : <>Chúng tôi luôn đặt khác hàng lên đầu</>}
           </h6>
         </div>
       </div>

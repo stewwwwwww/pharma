@@ -28,7 +28,6 @@ const HomePage = () => {
       {data ? <Products data={data.product} /> : <></>}
       <Contact />
       {data ? <Articles data={data.article} /> : <></>}
-      <SimpleMap />
       <Footer />
     </div>
   );

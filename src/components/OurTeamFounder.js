@@ -1,8 +1,11 @@
 import React from "react";
 import pic from "../assets/phuong.jpg";
 import { useAnimateContainer } from "../hooks/useAnimateContainer";
+import { useContext } from "react";
+import { LanguageContext } from "../App";
 
 const OurTeamFounder = () => {
+  const {languageContext} = useContext(LanguageContext)
   const animationRef1 = useAnimateContainer();
   const animationRef2 = useAnimateContainer();
   return (
@@ -16,12 +19,24 @@ const OurTeamFounder = () => {
       lg:items-start lg:text-start"
         ref={animationRef1}
       >
-        <h6 className="text-[#00378A]">Founder</h6>
-        <h2 className="font-medium">Over 20 Years of Experience</h2>
+        <h6 className="text-[#00378A]">{languageContext === "english" ? <>Founder</> : <>Nhà Sáng Lập</>}</h6>
+        <h2 className="font-medium">{languageContext === "english" ? <>Do Thuc De</> : <>Đỗ Thục Đệ</>}</h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-          pretium hendrerit nunc non viverra. Nulla ipsum felis, suscipit in
-          dolor sit amet, porttitor pulvinar lectus. Aliquam et sem eget.
+        {languageContext === "english" ? (
+              <>
+                Get to know the exceptional and highly qualified professionals
+                who make up our medical laboratory team. Each member brings a
+                wealth of expertise and a deep commitment to delivering accurate
+                and reliable results.
+              </>
+            ) : (
+              <>
+                Những chuyên gia xuất sắc và có trình độ cao, những người tạo
+                nên đội ngũ phòng thí nghiệm y tế của chúng tôi. Mỗi thành viên
+                đều mang đến một kho tàng kiến thức chuyên môn và một sự cam kết
+                sâu sắc đối với việc cung cấp kết quả chính xác và đáng tin cậy.
+              </>
+            )}
         </p>
       </div>
       <div
@@ -34,13 +49,13 @@ const OurTeamFounder = () => {
           ref={animationRef2}
         >
           <h2 className="font-semibold text-white">300+</h2>
-          <h6 className="text-white">certificactes</h6>
+          <h6 className="text-white">{languageContext === "english" ? <>Certificate</> : <>Chứng Chỉ</>}</h6>
           <h2 className="font-semibold text-white">300+</h2>
-          <h6 className="text-white">certificactes</h6>
+          <h6 className="text-white">{languageContext === "english" ? <>Achievement</> : <>Thành Tụu</>}</h6>
         </div>
         <div className="flex h-[25%] items-center pl-7 backdrop-blur-sm">
           <h6 className="text-white">
-            We care Too Much about Our Customers safsa
+            {languageContext === "english" ? <>Achived countless achievements in Medicines</>: <>Đạt vô số thành tựu trong ngành Dược</>}
           </h6>
         </div>
       </div>
